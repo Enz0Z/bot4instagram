@@ -1,3 +1,5 @@
+package me.enz0z.utils;
+
 import javax.net.ssl.HttpsURLConnection;
 import java.awt.Color;
 import java.io.IOException;
