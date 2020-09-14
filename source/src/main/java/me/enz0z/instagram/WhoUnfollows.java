@@ -30,7 +30,7 @@ public class WhoUnfollows {
 						firstRun = false;
 						cacheFollowers = M.getFollowers(response);
 						
-						S.log("UNFOLLOWERS >> Cached " + cacheFollowers.size() + " followers.");
+						S.log("[" + S.format(S.currentSeconds()) + "] UNFOLLOWERS >> Cached " + cacheFollowers.size() + " followers.");
 					} else {
 						List<Profile> currentFollowers = M.getFollowers(response);
 						
@@ -58,6 +58,8 @@ public class WhoUnfollows {
 							}
 						}
 						cacheFollowers = currentFollowers;
+						
+						S.log("[" + S.format(S.currentSeconds()) + "] UNFOLLOWERS >> Cached " + cacheFollowers.size() + " followers.");
 					}
 					WhoUnfollows.loop();
 				}).exceptionally(ex -> {
@@ -65,6 +67,6 @@ public class WhoUnfollows {
 				    return null;
 				});
 			}
-		}, (S.R.nextInt(7200000-3600000) + 3600000));
+		}, firstRun ? 0 : (S.R.nextInt(7200000-3600000) + 3600000));
 	}
 }
