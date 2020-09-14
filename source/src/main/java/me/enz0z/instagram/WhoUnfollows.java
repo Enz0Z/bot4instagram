@@ -65,6 +65,6 @@ public class WhoUnfollows {
 				    return null;
 				});
 			}
-		}, (S.R.nextInt(3600000-1800000) + 1800000));
+		}, (S.R.nextInt(7200000-3600000) + 3600000));
 	}
 }
