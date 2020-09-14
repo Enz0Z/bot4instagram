@@ -8,32 +8,29 @@ import com.github.instagram4j.instagram4j.IGClient.Builder.LoginHandler;
 import com.github.instagram4j.instagram4j.exceptions.IGLoginException;
 import com.github.instagram4j.instagram4j.utils.IGChallengeUtils;
 
-import me.enz0z.utils.Utils;
+import me.enz0z.utils.Prop;
+import me.enz0z.utils.S;
 
 public class Core {
 	
 	private static IGClient client;
 
 	public static void main(String args[]) {
-		if (args.length > 1) {
-			try {
-				Scanner scanner = new Scanner(System.in);
-				Callable<String> inputCode = () -> {
-				    System.out.print("Please input code: ");
-				    return scanner.nextLine();
-				};
-				LoginHandler twoFactorHandler = (client, response) -> {
-				    // included utility to resolve two factor
-				    // may specify retries. default is 3
-				    return IGChallengeUtils.resolveTwoFactor(client, response, inputCode);
-				};
-				client = IGClient.builder().username(args[0]).password(args[1]).onTwoFactor(twoFactorHandler).login();
-				
-				Utils.print("Currently connected as " + client.getSelfProfile().toString());
-				Commands.loop();
-			} catch (IGLoginException e) {
-				e.printStackTrace();
-			}	
+		new Prop();
+		try {
+			Scanner scanner = new Scanner(System.in);
+			Callable<String> inputCode = () -> {
+			    System.out.print("Please input code: ");
+			    return scanner.nextLine();
+			};
+			LoginHandler twoFactorHandler = (client, response) -> {
+			    return IGChallengeUtils.resolveTwoFactor(client, response, inputCode);
+			};
+			client = IGClient.builder().username(Prop.getString("Username")).password(Prop.getString("Password")).onTwoFactor(twoFactorHandler).login();
+			
+			S.log("Currently connected as [" + client.getSelfProfile().toString() + "]");
+		} catch (IGLoginException e) {
+			e.printStackTrace();
 		}
 	}
 	
