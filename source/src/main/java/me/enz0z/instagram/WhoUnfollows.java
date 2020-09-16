@@ -42,13 +42,16 @@ public class WhoUnfollows {
 							}
 							if (!found) {
 								DiscordWebhook webhook = new DiscordWebhook(Prop.getString("Webhook"));
+								
+								webhook.setUsername("EVENT >> Unfollow");
 								webhook.addEmbed(new DiscordWebhook.EmbedObject()
 									.setColor(Color.RED)
 									.setThumbnail(cache.getProfile_pic_url())
 									.setAuthor(cache.getUsername(), "https://instagram.com/" + cache.getUsername(), cache.getProfile_pic_url())
-									.setDescription(cache.getExtraProperties().toString())
+									.setDescription(cache.toString().length() > 2048 ? cache.toString().substring(0, 2048) : cache.toString())
 									.addField("Full Name", cache.getFull_name(), true)
 									.addField("PK", cache.getPk().toString(), true)
+									.addField("Extra Properties", cache.getExtraProperties().toString(), false)
 								);
 								try {
 									webhook.execute();
