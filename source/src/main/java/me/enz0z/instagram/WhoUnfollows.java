@@ -66,7 +66,7 @@ public class WhoUnfollows {
 					}
 					WhoUnfollows.loop();
 				}).exceptionally(ex -> {
-					S.log("ERROR >> " + ex.getMessage());
+					M.sendFastWebhook("**ERROR: **`" + ex.getMessage() + "`");
 				    return null;
 				});
 			}
