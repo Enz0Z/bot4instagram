@@ -15,7 +15,7 @@ public class M {
 
 	public static List<Profile> getFollowers(UserAction response) {
 		List<Profile> followers = new ArrayList<Profile>();
-		
+
 		for (FeedUsersResponse follower : response.followersFeed()) {
 			for (Profile profile : follower.getUsers()) {
 				followers.add(profile);
@@ -23,10 +23,10 @@ public class M {
 		}
 		return followers;
 	}
-	
+
 	public static void sendFastWebhook(String content) {
 		DiscordWebhook webhook = new DiscordWebhook(Prop.getString("Webhook"));
-		
+
 		webhook.setUsername("EVENT >> Error");
 		webhook.setContent(content);
 		try {

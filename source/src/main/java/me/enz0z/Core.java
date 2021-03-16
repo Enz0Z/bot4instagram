@@ -13,7 +13,7 @@ import me.enz0z.utils.Prop;
 import me.enz0z.utils.S;
 
 public class Core {
-	
+
 	private static IGClient client;
 
 	public static void main(String args[]) {
@@ -28,14 +28,14 @@ public class Core {
 			    return IGChallengeUtils.resolveTwoFactor(client, response, inputCode);
 			};
 			client = IGClient.builder().username(Prop.getString("Username")).password(Prop.getString("Password")).onTwoFactor(twoFactorHandler).login();
-			
+
 			S.log("Currently connected as [" + client.getSelfProfile().toString() + "]");
 			WhoUnfollows.loop();
 		} catch (IGLoginException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static IGClient getClient() {
 		return client;
 	}

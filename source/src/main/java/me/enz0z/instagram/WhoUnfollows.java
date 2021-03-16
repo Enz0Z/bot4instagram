@@ -15,13 +15,13 @@ import me.enz0z.utils.Prop;
 import me.enz0z.utils.S;
 
 public class WhoUnfollows {
-	
+
 	private static Boolean firstRun = true;
 	private static List<Profile> cacheFollowers = new ArrayList<Profile>();
-	
+
 	public static void loop() {
 		IGClient client = Core.getClient();
-		
+
 		S.T.schedule(new TimerTask() {
 			@Override
 			public void run() {
@@ -29,20 +29,20 @@ public class WhoUnfollows {
 					if (firstRun) {
 						firstRun = false;
 						cacheFollowers = M.getFollowers(response);
-						
+
 						S.log("[" + S.format(S.currentSeconds()) + "] UNFOLLOWERS >> Cached " + cacheFollowers.size() + " followers.");
 					} else {
 						List<Profile> currentFollowers = M.getFollowers(response);
-						
+
 						for (Profile cache : cacheFollowers) {
 							Boolean found = false;
-							
+
 							for (Profile profile : currentFollowers) {
 								if (cache.getPk().equals(profile.getPk())) found = true;
 							}
 							if (!found) {
 								DiscordWebhook webhook = new DiscordWebhook(Prop.getString("Webhook"));
-								
+
 								webhook.setUsername("EVENT >> Unfollow");
 								webhook.addEmbed(new DiscordWebhook.EmbedObject()
 									.setColor(Color.RED)
@@ -61,7 +61,7 @@ public class WhoUnfollows {
 							}
 						}
 						cacheFollowers = currentFollowers;
-						
+
 						S.log("[" + S.format(S.currentSeconds()) + "] UNFOLLOWERS >> Cached " + cacheFollowers.size() + " followers.");
 					}
 					WhoUnfollows.loop();
