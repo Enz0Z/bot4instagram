@@ -1,5 +1,6 @@
 package me.enz0z;
 
+import java.time.Clock;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -11,9 +12,8 @@ import com.github.instagram4j.instagram4j.models.user.Profile;
 import com.github.instagram4j.instagram4j.responses.feed.FeedUsersResponse;
 import com.github.instagram4j.instagram4j.utils.IGChallengeUtils;
 
+import me.enz0z.instagram.Prop;
 import me.enz0z.instagram.WhoUnfollows;
-import me.enz0z.utils.Prop;
-import me.enz0z.utils.S;
 
 public class Core {
 
@@ -30,7 +30,7 @@ public class Core {
 					return scanner.nextLine();
 				});
 			}).login();
-			S.log("Currently connected as [" + client.getSelfProfile().toString() + "]");
+			System.out.println("[" + Clock.systemUTC().instant().toString() + "] WhoUnfollows >> Currently connected as [" + client.getSelfProfile().toString() + "]");
 			WhoUnfollows.loop();
 		} catch (IGLoginException e) {
 			e.printStackTrace();
