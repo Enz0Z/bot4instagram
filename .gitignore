@@ -1,4 +1,5 @@
 .DS_Store
 *.properties
 bot4instagram.jar
+.settings/
 target/
