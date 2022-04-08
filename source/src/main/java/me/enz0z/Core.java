@@ -24,13 +24,13 @@ public class Core {
 		try {
 			client = IGClient.builder().username(Prop.getString("Username")).password(Prop.getString("Password")).onTwoFactor((client, response) -> {
 				return IGChallengeUtils.resolveTwoFactor(client, response, () -> {
-					Scanner scanner = new Scanner(System.in);
-
-					System.out.print("Please input code: ");
-					return scanner.nextLine();
+					try (Scanner scanner = new Scanner(System.in)) {
+						System.out.print("Please input code: ");
+						return scanner.nextLine();
+					}
 				});
 			}).login();
-			System.out.println("[" + Clock.systemUTC().instant().toString() + "] WhoUnfollows >> Currently connected as [" + client.getSelfProfile().toString() + "]");
+			System.out.println("[" + Clock.systemUTC().instant().toString() + "] Currently connected as [" + client.getSelfProfile().toString() + "]");
 			WhoUnfollows.loop();
 		} catch (IGLoginException e) {
 			e.printStackTrace();
